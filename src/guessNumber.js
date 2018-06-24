@@ -1,26 +1,35 @@
 var MainLayer = cc.Layer.extend({
     sprite:null,
+    dx:4,
     ctor:function () {
 
         this._super();
-        var size = cc.winSize;
+        var title = new cc.LabelTTF("猜數字遊戲", "", 48);
+        title.x = cc.winSize.width / 2;
+        title.y = cc.winSize.height *7/8;
+        title.setColor(cc.color(255,255,0));
+        this.addChild(title,0,"mytitle");
 
+        this.initLayout(); //initLayout是自定義 update是內建的
 
-        var helloLabel = new cc.LabelTTF("Hello World", "Arial", 38);
-
-        helloLabel.x = size.width / 2;
-        helloLabel.y = size.height / 2 + 200;
-        this.addChild(helloLabel, 5);
-
-
-        this.sprite = new cc.Sprite(res.HelloWorld_png);
-        this.sprite.attr({
-            x: size.width / 2,
-            y: size.height / 2
-        });
-        this.addChild(this.sprite, 0);
+        this.scheduleUpdate();
 
         return true;
+    },
+
+    initLayout: function(){
+
+    },
+
+    update:function () { //define update method
+        console.log("OK");
+        var title = this.getChildByName("mytitle"); //上面已addChild 所以可以get
+        if(title.x + title.width/2 >= cc.winSize.width ||
+        title.x - title.width/2 <= 0){
+            this.dx *= -1;
+        }
+
+        title.x += this.dx;
     }
 });
 
