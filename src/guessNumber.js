@@ -12,17 +12,21 @@ var MainLayer = cc.Layer.extend({
 
         this.initLayout(); //initLayout是自定義 update是內建的
 
-        this.scheduleUpdate();
+        this.scheduleUpdate(); //有這行title才會有動畫
 
         return true;
     },
 
     initLayout: function(){
-
+        var frameCache = cc.spriteFrameCache;
+        frameCache.addSpriteFrames(res.number_plist, res.number_png);
+        var n0 = new cc.Sprite("#number7.png");
+        n0.x = cc.winSize.width /2;
+        n0.y = cc.winSize.height /2;
+        this.addChild(n0);
     },
 
     update:function () { //define update method
-        console.log("OK");
         var title = this.getChildByName("mytitle"); //上面已addChild 所以可以get
         if(title.x + title.width/2 >= cc.winSize.width ||
         title.x - title.width/2 <= 0){
